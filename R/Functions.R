@@ -116,15 +116,27 @@ lulu <- function(otutable, matchlist, minimum_ratio_type = "min", minimum_ratio 
           if (relative_cooccurence >= minimum_relative_cooccurence) {
             cat(paste0(" which is sufficient!"), file = log_con)
             if (minimum_ratio_type == "avg") {
+              # relative_abundance <-
+              #   mean(otutable[line2, ][daughter_samples > 0]/
+              #          daughter_samples[daughter_samples > 0])
+              daughter_sampless <-
+                daughter_samples[, otutable[line2, ] > 0]
               relative_abundance <-
-                mean(otutable[line2, ][daughter_samples > 0]/
-                       daughter_samples[daughter_samples > 0])
+                mean(otutable[line2,
+                              otutable[line2, ] > 0][daughter_sampless > 0] /
+                       daughter_sampless[daughter_sampless > 0])
               cat(paste0("\n", "------mean avg abundance: ",
                          relative_abundance), file = log_con)
             } else {
+              # relative_abundance <-
+              #   min(otutable[line2, ][daughter_samples > 0]/
+              #         daughter_samples[daughter_samples > 0])
+              daughter_sampless <-
+                daughter_samples[, otutable[line2, ] > 0]
               relative_abundance <-
-                min(otutable[line2, ][daughter_samples > 0]/
-                      daughter_samples[daughter_samples > 0])
+                min(otutable[line2,
+                             otutable[line2, ] > 0][daughter_sampless > 0] /
+                      daughter_sampless[daughter_sampless > 0])
               cat(paste0("\n", "------min avg abundance: ",
                          relative_abundance), file = log_con)
             }
